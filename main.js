@@ -6,6 +6,7 @@ var selectedRow = null;
     $('#dobcheck').hide();
     $('#emailcheck').hide();
     $('#qualcheck').hide();
+    $('#detailstable').hide();
     var nameError = true;
     var emailError = true;
     var dobError = true;
@@ -33,7 +34,7 @@ var selectedRow = null;
       else 
       {
         $('#usercheck').hide();
-        console.log("namesuccess");
+        // console.log("namesuccess");
         nameError = true;
         return true;
       }
@@ -61,7 +62,7 @@ var selectedRow = null;
       }
       else
       {
-        console.log("dobsuccess");
+        // console.log("dobsuccess");
         dobError=true;
         return true;
       }
@@ -82,7 +83,7 @@ var selectedRow = null;
         }
         else
         {
-          console.log("emailsuccess");
+          // console.log("emailsuccess");
           emailError = true;
           return true;
         }
@@ -92,7 +93,7 @@ var selectedRow = null;
       function validateQual()
       {
         var qual=document.getElementById("qual").value;
-        if(qual == "Select")
+        if(qual == "Select" || qual == " ")
         {
           $("#qualcheck").show();
           qualError=false;
@@ -100,7 +101,7 @@ var selectedRow = null;
         }
         else
         {
-          console.log("qualsuccess");
+          // console.log("qualsuccess");
           qualError=true;
           return true;
         }
@@ -119,8 +120,17 @@ var selectedRow = null;
 		if ((nameError == true) && (dobError == true) && (emailError == true) && (qualError == true)) 
         {            
             var formData = readFormData();
-            console.log(formData);
-            if (selectedRow === null)
+            // if (selectedRow == null)
+            // {
+            //     insertNewRecord(formData);
+            // }
+            // else
+            // {
+            //     updateRecord(formData);
+            // }
+            // resetForm();
+			      // return true;
+            if ($("#submitbtn").val() == "submit") 
             {
                 insertNewRecord(formData);
             }
@@ -141,16 +151,18 @@ var selectedRow = null;
        function readFormData()
        {
            var formData = {};
-           formData["name"] = document.getElementById("name").value;
-           formData["dob"] = document.getElementById("dob").value;
-           formData["gender"] = document.getElementById("gender").value;
-           formData["qual"] = document.getElementById("qual").value;
-           formData["email"] = document.getElementById("email").value;
+           formData["name"] = $("#name").val();
+           formData["dob"] = $("#dob").val();
+           formData["gender"] = $("#gender").val();
+           formData["qual"] = $("#qual").val();
+           formData["email"] = $("#email").val();
+           console.log(formData);
            return formData;
        }
      //   Insert Data
        function insertNewRecord(data)
        {
+         $("#detailstable").show();
          var table = document.getElementById("detailstable").getElementsByTagName('tbody')[0];
          var newRow = table.insertRow(table.length);
          var cell1 = newRow.insertCell(0);
@@ -168,17 +180,19 @@ var selectedRow = null;
      }
      //Edit the data
     //  var selectedRow=null;
-     function onEdit(td){
+     function onEdit(td)
+     {
          selectedRow = td.parentElement.parentElement;
-         document.getElementById('name').value = selectedRow.cells[0].innerHTML;
-         document.getElementById('dob').value = selectedRow.cells[1].innerHTML;
-         document.getElementById('gender').value = selectedRow.cells[2].innerHTML;
-         document.getElementById('qual').value = selectedRow.cells[3].innerHTML;
-         document.getElementById('email').value = selectedRow.cells[4].innerHTML;
-         $("#submitbtn").attr("value","Update");
+         $('#name').value = selectedRow.cells[0].innerHTML;
+         $('#dob').value = selectedRow.cells[1].innerHTML;
+         $('#gender').value = selectedRow.cells[2].innerHTML;
+         $('#qual').value = selectedRow.cells[3].innerHTML;
+         $('#email').value = selectedRow.cells[4].innerHTML;
+         $("#submitbtn").attr("value","update");
      }
  
-     function updateRecord(formData){
+     function updateRecord(formData)
+     {
          selectedRow.cells[0].innerHTML = formData.name;
          selectedRow.cells[1].innerHTML = formData.dob;
          selectedRow.cells[2].innerHTML = formData.gender;
@@ -187,19 +201,22 @@ var selectedRow = null;
      }
  
      //Delete the data
-     function onDelete(td){
+     function onDelete(td)
+     {
          if(confirm('Do you want to delete this record?')){
              row = td.parentElement.parentElement;
-             document.getElementById('detailstable').deleteRow(row.rowIndex);
+            //  $("#detailstable").deleteRow(row.rowIndex);
+            $(row).remove();
          }
          resetForm();
      }
  
      //Reset the data
-     function resetForm(){
-         document.getElementById('name').value = '';
-         document.getElementById('dob').value = '';
-         document.getElementById('gender').value = '';
-         document.getElementById('qual').value = '';
-         document.getElementById('email').value = '';
+     function resetForm()
+     {
+      $("#name").val('');
+      $("#dob").val('');
+      $("#gender").val('');
+      $("#qual").val('') ;
+      $("#email").val('');
      }
