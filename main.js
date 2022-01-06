@@ -1,3 +1,4 @@
+var selectedRow = null;
 // $(document).ready(function () 
 //   {
     // Validate Name
@@ -9,6 +10,8 @@
     var emailError = true;
     var dobError = true;
     var qualError = true;
+    console.log("start");
+    console.log(selectedRow);
     $('#name').keyup(function () {validateName();});
     
     function validateName() 
@@ -30,6 +33,7 @@
       else 
       {
         $('#usercheck').hide();
+        console.log("namesuccess");
         nameError = true;
         return true;
       }
@@ -57,6 +61,7 @@
       }
       else
       {
+        console.log("dobsuccess");
         dobError=true;
         return true;
       }
@@ -77,6 +82,7 @@
         }
         else
         {
+          console.log("emailsuccess");
           emailError = true;
           return true;
         }
@@ -94,6 +100,7 @@
         }
         else
         {
+          console.log("qualsuccess");
           qualError=true;
           return true;
         }
@@ -101,24 +108,24 @@
 
     
       // Submit button
+        
 	$('#submitbtn').click(function () 
     {
-        validateName();  
-        validateDOB();
-        validateEmail();
-        validateQual();
-		    if((nameError == true) && (dobError == true) && (emailError == true) && (qualError == true)) 
-        {
-            var selectedRow=null;
+		validateName();  
+		validateDOB();
+		validateEmail();
+    validateQual();   
+    // console.log(selectedRow);    
+		if ((nameError == true) && (dobError == true) && (emailError == true) && (qualError == true)) 
+        {            
             var formData = readFormData();
-            if(selectedRow === null)
+            console.log(formData);
+            if (selectedRow === null)
             {
-              console.log("insert");
                 insertNewRecord(formData);
             }
             else
             {
-              console.log("update");
                 updateRecord(formData);
             }
             resetForm();
@@ -127,8 +134,9 @@
         else 
         {
 			      return false;
-		    }});
-  // });
+		    }
+  });
+// });
        //Retrieve Data
        function readFormData()
        {
@@ -159,6 +167,7 @@
              cell6.innerHTML = `<button class='btn-primary' onClick='onEdit(this)'>Edit</button> <button class='btn-danger' onClick='onDelete(this)'>Delete</button>`;
      }
      //Edit the data
+    //  var selectedRow=null;
      function onEdit(td){
          selectedRow = td.parentElement.parentElement;
          document.getElementById('name').value = selectedRow.cells[0].innerHTML;
@@ -166,6 +175,7 @@
          document.getElementById('gender').value = selectedRow.cells[2].innerHTML;
          document.getElementById('qual').value = selectedRow.cells[3].innerHTML;
          document.getElementById('email').value = selectedRow.cells[4].innerHTML;
+         $("#submitbtn").attr("value","Update");
      }
  
      function updateRecord(formData){
