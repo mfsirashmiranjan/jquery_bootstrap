@@ -1,4 +1,4 @@
-var selectedRow = null;
+   var selectedRow = null;
 // $(document).ready(function () 
 //   {
     // Validate Name
@@ -115,7 +115,7 @@ var selectedRow = null;
 		validateName();  
 		validateDOB();
 		validateEmail();
-    validateQual();   
+        validateQual();   
     // console.log(selectedRow);    
 		if ((nameError == true) && (dobError == true) && (emailError == true) && (qualError == true)) 
         {            
@@ -138,11 +138,11 @@ var selectedRow = null;
             {
                 updateRecord(formData);
             }
-            resetForm();
+                  resetForm();
 			      return true;
 		    } 
-        else 
-        {
+            else 
+            {
 			      return false;
 		    }
   });
@@ -179,15 +179,20 @@ var selectedRow = null;
              cell6.innerHTML = `<button class='btn-primary' onClick='onEdit(this)'>Edit</button> <button class='btn-danger' onClick='onDelete(this)'>Delete</button>`;
      }
      //Edit the data
-    //  var selectedRow=null;
+   
      function onEdit(td)
      {
          selectedRow = td.parentElement.parentElement;
-         $('#name').value = selectedRow.cells[0].innerHTML;
-         $('#dob').value = selectedRow.cells[1].innerHTML;
-         $('#gender').value = selectedRow.cells[2].innerHTML;
-         $('#qual').value = selectedRow.cells[3].innerHTML;
-         $('#email').value = selectedRow.cells[4].innerHTML;
+         $('#name').val(selectedRow.cells[0].innerHTML);
+         $('#dob').val(selectedRow.cells[1].innerHTML);
+         $('#gender').val(selectedRow.cells[2].innerHTML);
+         $('#qual').val(selectedRow.cells[3].innerHTML);
+         $('#email').val(selectedRow.cells[4].innerHTML);
+         // $('#name').val() = selectedRow.cells[0].innerHTML;
+         // $('#dob').val() = selectedRow.cells[1].innerHTML;
+         // $('#gender').val() = selectedRow.cells[2].innerHTML;
+         // $('#qual').val() = selectedRow.cells[3].innerHTML;
+         // $('#email').val() = selectedRow.cells[4].innerHTML;
          $("#submitbtn").attr("value","update");
      }
  
